@@ -21,7 +21,9 @@ description: Coding standards for component structure, comments, and file organi
   - Place child components at the bottom
 
 ## Types and Interfaces
-- Put types and interfaces in dedicated folders/files
+- Organize types and interfaces in feature-based folders/files
+- Combine related types in the same file (e.g., Product with ProductOnCarts, Order with Payment)
+- Don't separate types into too many files - group by feature/domain
 - Keep type definitions organized and separate from component logic
 - Use interfaces for object shapes, types for unions/intersections
 - Prefer type inference when types are obvious
