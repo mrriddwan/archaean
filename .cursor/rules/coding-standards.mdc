@@ -1,0 +1,179 @@
+---
+alwaysApply: true
+description: Coding standards for component structure, comments, and file organization
+---
+
+# Coding Standards
+
+## Comments
+- Minimize comments in code
+- When comments are necessary, keep them concise and straightforward
+- Avoid verbose or redundant comments
+
+## Component Structure
+- If a component becomes too long, split it into smaller sub-components
+- Keep components focused and maintainable
+
+## File Organization
+- Separate components and their sub-components into different files
+- When multiple components must be in one file:
+  - Place parent components at the top
+  - Place child components at the bottom
+
+## Types and Interfaces
+- Put types and interfaces in dedicated folders/files
+- Keep type definitions organized and separate from component logic
+- Use interfaces for object shapes, types for unions/intersections
+- Prefer type inference when types are obvious
+- Use `const` assertions for literal types
+
+## Naming Conventions
+- Use PascalCase for components, types, and interfaces
+- Use camelCase for variables, functions, and methods
+- Use UPPER_SNAKE_CASE for constants
+- Use descriptive names that indicate purpose
+- Avoid abbreviations unless widely understood
+- Boolean variables should start with `is`, `has`, `should`, or `can`
+
+## React Best Practices
+- Use functional components with hooks
+- Extract custom hooks when logic is reusable
+- Keep components pure and avoid side effects in render
+- Use `useMemo` and `useCallback` judiciously (only when needed for performance)
+- Only use `useEffect` when required
+- Prefer composition over prop drilling
+- Use proper keys in lists (stable, unique identifiers)
+- Handle loading and error states explicitly
+- Destructure props at the component signature
+
+## TypeScript Best Practices
+- Avoid `any` type; use `unknown` when type is truly unknown
+- Use strict mode and enable all strict checks
+- Prefer `interface` over `type` for object shapes (unless you need union/intersection)
+- Use utility types (`Partial`, `Pick`, `Omit`, etc.) when appropriate
+- Define return types for functions when not obvious
+- Use `as const` for immutable data structures
+
+## Code Quality
+- Follow DRY (Don't Repeat Yourself) principle
+- Keep functions small and focused (single responsibility)
+- Avoid deep nesting (max 3-4 levels)
+- Use early returns to reduce nesting
+- Extract magic numbers and strings into named constants
+- Prefer explicit over implicit code
+
+## Error Handling
+- Handle errors gracefully with try-catch or error boundaries
+- Provide meaningful error messages
+- Log errors appropriately for debugging
+- Use error boundaries for React component error handling
+- Validate inputs at boundaries
+
+## Performance
+- Avoid unnecessary re-renders
+- Use React.memo for expensive components
+- Lazy load routes and heavy components
+- Optimize images and assets
+- Debounce/throttle expensive operations (API calls, scroll handlers)
+
+## Security
+- Sanitize user inputs
+- Never expose sensitive data in client-side code
+- Use environment variables for configuration
+- Validate data from external sources
+- Be cautious with `dangerouslySetInnerHTML`
+
+## Accessibility
+- Use semantic HTML elements
+- Provide alt text for images
+- Ensure keyboard navigation works
+- Maintain proper heading hierarchy
+- Use ARIA attributes when necessary
+- Ensure sufficient color contrast
+
+## File and Folder Structure
+- Use feature-based or domain-based folder structure
+- Group related files together
+- Use index files for clean imports
+- Keep file names consistent with component names
+- Separate concerns (components, hooks, utils, types)
+
+## API and Data Fetching
+- Use React Query for server state management
+- Handle loading, error, and success states
+- Implement proper caching strategies
+- Use optimistic updates when appropriate
+- Validate API responses
+
+## Testing Considerations
+- Write testable code (pure functions, dependency injection)
+- Keep business logic separate from UI
+- Use meaningful test descriptions
+- Test user behavior, not implementation details
+
+## SonarQube Review Checklist
+Before finalizing code, ensure it passes SonarQube quality gates:
+
+### Bugs and Vulnerabilities
+- Fix all critical and high-severity bugs
+- Address security vulnerabilities (SQL injection, XSS, CSRF, etc.)
+- Remove hardcoded credentials, tokens, or secrets
+- Validate all user inputs to prevent injection attacks
+- Handle null/undefined checks to prevent runtime errors
+
+### Code Smells
+- Reduce cognitive complexity (keep functions under 15 complexity)
+- Eliminate duplicated code blocks
+- Remove dead code and unused variables/imports
+- Fix magic numbers (extract to named constants)
+- Avoid deeply nested conditionals (max 3-4 levels)
+- Remove commented-out code
+
+### Maintainability
+- Keep functions small (max 50 lines, ideally 20-30)
+- Maintain cyclomatic complexity below 10 per function
+- Ensure proper error handling in all code paths
+- Use meaningful variable and function names
+- Follow consistent code formatting
+
+### Security Hotspots
+- Review authentication and authorization logic
+- Check for sensitive data exposure
+- Validate file uploads and downloads
+- Review cryptographic operations
+- Audit third-party dependency vulnerabilities
+
+### Code Coverage
+- Maintain minimum code coverage threshold (typically 80%)
+- Ensure critical paths are tested
+- Test error handling and edge cases
+- Verify integration points are covered
+
+### TypeScript/JavaScript Specific
+- Avoid `any` types (use `unknown` or proper types)
+- Remove unused imports and variables
+- Fix ESLint warnings and errors
+- Ensure proper type guards for runtime safety
+- Avoid `eval()` and `Function()` constructors
+
+### React Specific
+- Check for missing dependencies in useEffect hooks
+- Ensure proper cleanup in useEffect (return cleanup functions)
+- Verify keys are used correctly in lists
+- Check for memory leaks (unmounted component updates)
+- Review prop types and default values
+
+### Performance
+- Identify and fix performance bottlenecks
+- Remove unnecessary re-renders
+- Optimize expensive computations
+- Review bundle size impact of new dependencies
+
+### Final Review Steps
+1. Run SonarQube analysis locally before committing
+2. Address all blocker and critical issues
+3. Review code smells and technical debt
+4. Ensure code passes all quality gates
+5. Verify no new security vulnerabilities introduced
+6. Check that code coverage hasn't decreased
+7. Confirm all tests pass
