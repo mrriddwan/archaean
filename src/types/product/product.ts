@@ -7,6 +7,7 @@ export interface Product {
   name: string
   description: string | null
   price: number
+  image_url: string
   created_at: Date | string
   updated_at: Date | string | null
   shop_id: string
