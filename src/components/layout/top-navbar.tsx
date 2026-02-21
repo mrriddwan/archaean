@@ -1,7 +1,8 @@
-import { BsShop } from 'react-icons/bs'
-import { BiHome, BiHomeAlt, BiStore, BiUser } from 'react-icons/bi'
+
 import { Link, useLocation } from '@tanstack/react-router'
-import { FaHome, FaMapMarkedAlt, FaShoppingCart, FaShopware, FaStore, FaUser } from 'react-icons/fa'
+import { FaHome, FaShoppingCart, FaStore } from 'react-icons/fa'
+
+import { AuthButton } from '../../features/auth/auth-button'
 
 export const TopNavbar = () => {
   const location = useLocation()
@@ -41,16 +42,16 @@ export const TopNavbar = () => {
       </div>
       {
         isMarketplace && (
-          <div className="flex items-center gap-1">
-            <button className="rounded-md transition-colors">
+          <div className="flex items-center gap-4">
+            <button className="rounded-md p-2">
               <FaShoppingCart className='size-5 ' />
             </button>
-            <button className="rounded-md transition-colors">
-              <FaUser className='size-5 ' />
-            </button>
+            <AuthButton />
           </div>
         )
       }
     </nav >
   )
 }
+
+

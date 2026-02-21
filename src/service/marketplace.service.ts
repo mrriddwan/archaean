@@ -1,5 +1,5 @@
 import { BASE_URL } from "../lib/axios"
-import type { Product } from "../features/marketplace/types"
+import type { Product } from "../types/product/product"
 
 
 const marketplaceService = {
@@ -7,8 +7,6 @@ const marketplaceService = {
     const response = await fetch(`${BASE_URL}/products`, {
       headers: {
         'Content-Type': 'application/json',
-        // TODO: Add authentication token when auth is implemented
-        // 'Authorization': `Bearer ${token}`
       },
     })
     
