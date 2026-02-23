@@ -32,7 +32,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           <span className="text-xl font-bold text-gray-900">
             {formatPrice(product.price)}
           </span>
-          <button className="flex items-center gap-1 px-4 py-2 text-gray-900 text-sm font-medium rounded-md border border-gray-300 shadow-sm hover:bg-gray-800 transition-colors ">
+          <button className="flex items-center gap-1 px-4 py-2 text-gray-900 text-sm font-medium rounded-md border border-gray-300 shadow-sm hover:bg-gray-800 transition-colors " onClick={handleAddToCart}>
             + <FaShoppingCart className='size-4' />
           </button>
         </div>
