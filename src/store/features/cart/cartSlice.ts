@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { Cart } from "../../types/cart/cart";
-import type { ProductOnCarts } from "../../types/product/product";
+import type { Cart } from "../../../types/cart/cart";
+import type { ProductOnCarts } from "../../../types/product/product";
 
 interface CartState extends Cart {
  products: ProductOnCarts[]
