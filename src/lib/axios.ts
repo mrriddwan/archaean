@@ -42,14 +42,22 @@ export interface RefreshTokenResponse {
 
 const TOKEN_KEY = "marketplace_access_token";
 const REFRESH_TOKEN_KEY = "marketplace_refresh_token";
+const EXPIRES_IN_KEY = "marketplace_expires_in";
+const USER_ID_KEY = "marketplace_user_id";
 
 export const tokenManager = {
  getAccessToken: (): string | null => localStorage.getItem(TOKEN_KEY),
  getRefreshToken: (): string | null => localStorage.getItem(REFRESH_TOKEN_KEY),
+ getExpiresIn: (): number | null => localStorage.getItem(EXPIRES_IN_KEY) ? parseInt(localStorage.getItem(EXPIRES_IN_KEY)!) : null,
+ getUserId: (): string | null => localStorage.getItem(USER_ID_KEY),
 
- setTokens: (accessToken: string, refreshToken: string): void => {
+ setTokens: (accessToken: string, refreshToken: string, expiresIn: number, userId?: string | null): void => {
    localStorage.setItem(TOKEN_KEY, accessToken);
    localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
+   localStorage.setItem(EXPIRES_IN_KEY, expiresIn.toString());
+   if (userId) {
+     localStorage.setItem(USER_ID_KEY, userId);
+   }
  },
 
  clearTokens: (): void => {
@@ -161,11 +169,11 @@ apiClient.interceptors.response.use(
 
        const { data } = await axios.post<RefreshTokenResponse>(
          `${BASE_URL}/auth/refresh`,
-         { refreshToken },
+         { refresh_token: refreshToken },
          { headers: { "Content-Type": "application/json" } }
        );
 
-       tokenManager.setTokens(data.accessToken, data.refreshToken);
+       tokenManager.setTokens(data.accessToken, data.refreshToken, data.expiresIn);
        processQueue(null, data.accessToken);
 
        if (originalRequest.headers) {

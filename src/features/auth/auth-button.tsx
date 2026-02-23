@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { FaUser } from 'react-icons/fa'
 import {
   Dialog,
@@ -12,12 +13,14 @@ import { LoginForm } from './components/login-form'
 import { RegisterForm } from './components/register-form'
 import { useCurrentUser, useLogout } from '../../query/auth'
 import { Button } from '../../components/ui/button'
+import type { RootState } from '../../store'
 
 export const AuthButton = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login')
 
-  const { data: user, isLoading: isLoadingUser } = useCurrentUser()
+  const user = useSelector((state: RootState) => state.user.user)
+  const { isLoading: isLoadingUser } = useCurrentUser()
   const logoutMutation = useLogout()
 
   const handleLoginSuccess = () => {

@@ -4,6 +4,9 @@ import { FaHome, FaShoppingCart, FaStore } from 'react-icons/fa'
 
 import { AuthButton } from '../../features/auth/auth-button'
 
+const CHILL_AURORA_GRADIENT =
+  'linear-gradient(90deg, #67e8f9, #a5b4fc, #c4b5fd, #5eead4, #67e8f9)'
+
 export const TopNavbar = () => {
   const location = useLocation()
 
@@ -12,12 +15,12 @@ export const TopNavbar = () => {
   const navItems = [
     {
       label: 'Home',
-      icon: <FaHome className='size-6' />,
+      icon: <FaHome className="size-5 sm:size-6" />,
       path: '/',
     },
     {
       label: 'Marketplace',
-      icon: <FaStore className='size-6' />,
+      icon: <FaStore className="size-5 sm:size-6" />,
       path: '/marketplace',
     },
   ]
@@ -25,18 +28,41 @@ export const TopNavbar = () => {
   const isMarketplace = location.pathname === '/marketplace'
 
   return (
-    <nav className='flex fixed top-0 left-0 w-full bg-white border-b border-gray-200 z-10 justify-between items-center px-6 py-4 shadow-sm'>
-      <div className="flex items-center gap-2">
+    <nav className="flex fixed top-0 left-0 w-full bg-zinc-950/50 z-10 justify-between items-center px-4 py-4 shadow-sm backdrop-blur-2xl sm:px-6">
+      <div className="flex items-center gap-1 sm:gap-2">
         {navItems.map((item) => (
           <Link
             to={item.path}
             key={item.path}
-            className={`p-2 rounded-md transition-colors ${isActive(item.path)
-              ? 'text-black'
-              : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-              }`}
+            className={`flex items-center gap-1.5 p-2 rounded-md transition-colors sm:gap-2 ${
+              isActive(item.path)
+                ? ''
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+            }`}
           >
-            {item.icon}
+            {isActive(item.path) ? (
+              <>
+                <span
+                  className="bg-clip-text text-transparent font-medium text-sm sm:text-base"
+                  style={{
+                    backgroundImage: CHILL_AURORA_GRADIENT,
+                    backgroundSize: '200% auto',
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                  }}
+                >
+                  {item.label}
+                </span>
+                <span className="shrink-0 text-cyan-400">{item.icon}</span>
+              </>
+            ) : (
+              <>
+                <span className="hidden text-sm font-medium text-slate-400 sm:inline">
+                  {item.label}
+                </span>
+                {item.icon}
+              </>
+            )}
           </Link>
         ))}
       </div>
