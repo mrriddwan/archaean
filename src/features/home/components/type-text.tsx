@@ -54,7 +54,7 @@ export const TypeText = () => {
  }, [displayedText, isDeleting, currentPhraseIndex, phrases, typingSpeed])
 
  return (
-  <h1>
+  <h1 className="text-2xl font-medium tracking-tight">
    {displayedText}
    <span className="cursor">|</span>
   </h1>
