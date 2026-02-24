@@ -13,7 +13,7 @@ const ICON_MAP = {
 
 export function ContactSection() {
   return (
-    <section className="bg-zinc-900 px-4 py-20 sm:px-6 sm:py-28 md:py-32">
+    <section className="bg-zinc-950 px-4 py-20 sm:px-6 sm:py-28 md:py-32">
       <div className="mx-auto max-w-2xl text-center">
         <motion.h2
           className="mb-8 font-mono text-sm uppercase tracking-[0.3em] sm:mb-2 sm:text-base"
