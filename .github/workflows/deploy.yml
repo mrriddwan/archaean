@@ -1,12 +1,4 @@
-# Deploy to DigitalOcean Droplet with Docker + DOCR (Let's Encrypt SSL)
-- name: Deploy to Droplet
-  run: |
-    ssh ... "
-      cd /opt/archaean
-      docker compose pull frontend
-      docker compose up -d frontend
-      docker image prune -f
-    "
+name: Deploy to DigitalOcean Droplet
 
 on:
   push:
@@ -26,7 +18,10 @@ jobs:
 
       - name: Login to DigitalOcean Container Registry
         run: |
-          echo "${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" | docker login registry.digitalocean.com -u "${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" --password-stdin
+          echo "${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" | \
+            docker login registry.digitalocean.com \
+            -u "${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" \
+            --password-stdin
 
       - name: Build and push Docker image
         id: build
@@ -57,20 +52,29 @@ jobs:
       - name: Deploy to Droplet
         env:
           IMAGE: ${{ needs.build-and-push.outputs.image }}
-          DOMAIN: ${{ vars.DOMAIN }}
         run: |
           echo "${{ secrets.DROPLET_SSH_KEY }}" > key.pem
           chmod 600 key.pem
-          echo "${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" > token.txt
-          scp -o StrictHostKeyChecking=no -i key.pem token.txt ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }}:/tmp/do_token.txt
-          ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }} "
-            set -e
-            cat /tmp/do_token.txt | docker login registry.digitalocean.com -u \"\$(cat /tmp/do_token.txt)\" --password-stdin
-            rm -f /tmp/do_token.txt
-            docker stop archaean 2>/dev/null || true
-            docker rm archaean 2>/dev/null || true
-            docker pull $IMAGE
-            docker run -d --name archaean --restart unless-stopped -p 80:80 -p 443:443 -e DOMAIN=$DOMAIN -v archaean_caddy_data:/data $IMAGE
-            docker image prune -f
-          "
-          rm -f key.pem token.txt
+
+          ssh -o StrictHostKeyChecking=no -i key.pem \
+            ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }} "
+              set -e
+
+              # Login to DOCR
+              echo '${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}' | \
+                docker login registry.digitalocean.com \
+                -u '${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}' \
+                --password-stdin
+
+              # Pull latest image
+              cd /opt/archaean
+              docker compose pull frontend
+
+              # Start/restart only frontend for now
+              docker compose up -d frontend
+
+              # Clean up old images to save disk space
+              docker image prune -f
+            "
+
+          rm -f key.pem
