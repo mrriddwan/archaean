@@ -2,7 +2,7 @@ name: Deploy to DigitalOcean Droplet
 
 on:
   push:
-    branches: [main]
+    branches: [deploy/prod]
   workflow_dispatch:
 
 env:
