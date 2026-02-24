@@ -28,7 +28,7 @@ export const TopNavbar = () => {
   const isMarketplace = location.pathname === '/marketplace'
 
   return (
-    <nav className="flex fixed top-0 left-0 w-full bg-zinc-950/50 z-10 justify-between items-center px-4 py-4 shadow-sm backdrop-blur-2xl sm:px-6">
+    <nav className="flex fixed top-0 left-0 w-full backdrop-blur-md z-10 justify-between items-center px-4 py-4 shadow-sm sm:px-6">
       <div className="flex items-center gap-1 sm:gap-2">
         {navItems.map((item) => (
           <Link

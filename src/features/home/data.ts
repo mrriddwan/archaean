@@ -34,13 +34,13 @@ export const CONTACT_ITEMS = [
 ]
 
 export const ABOUT =
-  'Innovative Full Stack Developer with 3 years of experience in managing complex government projects and developing robust full-stack solutions, 6-year background in manufacturing, with strong attention to detail, workflow understanding, and a practical approach to development.'
+  'Innovative Full Stack Developer with 3 years of experience in managing system development and developing robust full-stack solutions, 6-year background in manufacturing, with strong attention to detail, workflow understanding, and a practical approach to development.'
 
 export const EXPERIENCE = [
   {
     role: 'Front End Developer',
     company: 'UQPAY Sdn Bhd',
-    period: 'Aug 2025 – Feb 2026',
+    period: 'Aug 2025 - Feb 2026',
     points: [
       'Develop new features for existing business systems',
       'Maintained and debugged financial systems',
@@ -50,7 +50,7 @@ export const EXPERIENCE = [
   {
     role: 'Front End Developer',
     company: 'Infra Systems Technology Sdn Bhd',
-    period: 'Feb 2025 – Jul 2025',
+    period: 'Feb 2025 - Jul 2025',
     points: [
       'Developed company website using Nuxt.js',
       'Conducted testing for company e-hailing app',
@@ -60,7 +60,7 @@ export const EXPERIENCE = [
   {
     role: 'Full Stack Developer',
     company: 'RF Infinite Sdn Bhd',
-    period: 'Feb 2023 – Jan 2025',
+    period: 'Feb 2023 - Jan 2025',
     points: [
       'Led government project: requirements, workshops, front end and backend',
       'Developed RESTful APIs for Pcari app (services, invitations, gigs)',
@@ -70,10 +70,30 @@ export const EXPERIENCE = [
   {
     role: 'Full Stack Developer',
     company: 'Bluedale Integrated Sdn Bhd',
-    period: 'Aug 2022 – Jan 2023',
+    period: 'Aug 2022 - Jan 2023',
     points: [
       'Solo-built internal CRM for client contact and history in under three months',
       'Developed front end from user requirements; integrated backend for marketing and sales tracking',
+    ],
+  },
+  {
+    role: 'Production Executive',
+    company: 'Kozato Kizai Malaysia',
+    period: 'Apr 2018 - Apr 2022',
+    points: [
+      'Managed the compression moulding section consisting of four supervisors and 30+ machine operators for day to day operation',
+      'Experienced in troubleshooting product quality issues and process abnormalities through reverse engineering and other problem',
+      'Conducted and participated in process improvement projects in enhancing the production output and the consistency of high quality products up to customers\' standard',
+    ],
+  },
+  {
+    role: 'Production Executive',
+    company: 'Kossan Latex Sdn Bhd',
+    period: 'Nov 2016 - Apr 2018',
+    points: [
+      'Carried out new product testing on-site that is required for client\'s requirements and regulations',
+      'Collected daily recordings and data for the respective factory assigned for process quality maintenance',
+      'Participated in factory audits and assessment for customer\'s evaluation on process, product and procedures implemented',
     ],
   },
 ]
@@ -81,15 +101,15 @@ export const EXPERIENCE = [
 export const PROJECTS = [
   {
     name: 'Technical Demo: Marketplace (Backend)',
-    description: 'Marketplace with JWT/OAuth, roles and permissions, Zod validation, Prisma + Postgres.',
-    tech: 'Express, Prisma, Zod, Postgres',
+    description: 'Marketplace with ordering flow and Stripe integration with roles and permissions',
+    tech: 'Express, JWT, OAuth, Stripe, Prisma, Zod, Postgres, Redis',
     href: `${import.meta.env.VITE_WEB_URL}/marketplace`,
     period: 'Dec 2025 - Present',
   },
   {
     name: 'UQPAY Website + UQPAY Merchant Portal + UQPAY Admin Account Centre Portal',
-    description: 'Website for UQPAY Sdn Bhd',
-    tech: 'Next.js, Tailwind CSS, TypeScript',
+    description: 'Website modules: card, solution and banking + system maintenance and feature development',
+    tech: 'Next.js, Tailwind CSS, TypeScript, Zustand, Shadcn UI',
     href: 'https://uqpay.com',
     period: 'Aug 2025 - Feb 2026',
   },
@@ -131,6 +151,8 @@ export const SKILLS_FRONTEND = [
   'Zustand',
   'Chakra UI',
   'Tailwind CSS',
+  'Zod',
+  'Shadcn UI',
   'Figma',
 ]
 
@@ -141,6 +163,9 @@ export const SKILLS_BACKEND = [
   'Laravel',
   'MySQL',
   'WordPress API',
+  'OAuth',
+  'JWT',
+  'Stripe',
 ]
 
-export const SKILLS_DEPLOYMENT_DEVOPS = ['cPanel', 'GoDaddy', 'Git', 'Docker', 'CI/CD', 'AWS', 'GCP']
+export const SKILLS_DEPLOYMENT_DEVOPS = ['cPanel', 'GoDaddy', 'Git', 'Docker', 'GitHub Actions CI/CD', 'DigitalOcean']
