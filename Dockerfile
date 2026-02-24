@@ -1,0 +1,35 @@
+FROM node:20-alpine AS builder
+WORKDIR /app
+RUN corepack enable && corepack prepare pnpm@latest --activate
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
+COPY . .
+
+ARG VITE_API_BASE_URL
+ARG VITE_APP_VERSION=1.0.0
+ARG VITE_WEB_URL
+ARG VITE_USER_NAME
+ARG VITE_USER_TAGLINE
+ARG VITE_USER_LOCATION
+ARG VITE_USER_EMAIL
+ARG VITE_USER_PHONE
+ARG VITE_USER_LINKEDIN_URL
+ARG VITE_USER_GITHUB_URL
+
+ENV VITE_API_BASE_URL=${VITE_API_BASE_URL} \
+    VITE_APP_VERSION=${VITE_APP_VERSION} \
+    VITE_WEB_URL=${VITE_WEB_URL} \
+    VITE_USER_NAME=${VITE_USER_NAME} \
+    VITE_USER_TAGLINE=${VITE_USER_TAGLINE} \
+    VITE_USER_LOCATION=${VITE_USER_LOCATION} \
+    VITE_USER_EMAIL=${VITE_USER_EMAIL} \
+    VITE_USER_PHONE=${VITE_USER_PHONE} \
+    VITE_USER_LINKEDIN_URL=${VITE_USER_LINKEDIN_URL} \
+    VITE_USER_GITHUB_URL=${VITE_USER_GITHUB_URL}
+
+RUN pnpm run build
+
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80

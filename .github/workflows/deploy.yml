@@ -1,0 +1,76 @@
+# Deploy to DigitalOcean Droplet with Docker + DOCR (Let's Encrypt SSL)
+- name: Deploy to Droplet
+  run: |
+    ssh ... "
+      cd /opt/archaean
+      docker compose pull frontend
+      docker compose up -d frontend
+      docker image prune -f
+    "
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  IMAGE_NAME: archaean
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.build.outputs.image }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login to DigitalOcean Container Registry
+        run: |
+          echo "${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" | docker login registry.digitalocean.com -u "${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" --password-stdin
+
+      - name: Build and push Docker image
+        id: build
+        env:
+          REGISTRY: registry.digitalocean.com
+          REGISTRY_NAME: ${{ vars.REGISTRY_NAME }}
+        run: |
+          IMAGE="$REGISTRY/$REGISTRY_NAME/${{ env.IMAGE_NAME }}:latest"
+          docker build \
+            --build-arg VITE_API_BASE_URL="${{ vars.VITE_API_BASE_URL }}" \
+            --build-arg VITE_APP_VERSION="${{ vars.VITE_APP_VERSION }}" \
+            --build-arg VITE_WEB_URL="${{ vars.VITE_WEB_URL }}" \
+            --build-arg VITE_USER_NAME="${{ vars.VITE_USER_NAME }}" \
+            --build-arg VITE_USER_TAGLINE="${{ vars.VITE_USER_TAGLINE }}" \
+            --build-arg VITE_USER_LOCATION="${{ vars.VITE_USER_LOCATION }}" \
+            --build-arg VITE_USER_EMAIL="${{ vars.VITE_USER_EMAIL }}" \
+            --build-arg VITE_USER_PHONE="${{ vars.VITE_USER_PHONE }}" \
+            --build-arg VITE_USER_LINKEDIN_URL="${{ vars.VITE_USER_LINKEDIN_URL }}" \
+            --build-arg VITE_USER_GITHUB_URL="${{ vars.VITE_USER_GITHUB_URL }}" \
+            -t "$IMAGE" .
+          docker push "$IMAGE"
+          echo "image=$IMAGE" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Droplet
+        env:
+          IMAGE: ${{ needs.build-and-push.outputs.image }}
+          DOMAIN: ${{ vars.DOMAIN }}
+        run: |
+          echo "${{ secrets.DROPLET_SSH_KEY }}" > key.pem
+          chmod 600 key.pem
+          echo "${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" > token.txt
+          scp -o StrictHostKeyChecking=no -i key.pem token.txt ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }}:/tmp/do_token.txt
+          ssh -o StrictHostKeyChecking=no -i key.pem ${{ secrets.DROPLET_USER }}@${{ secrets.DROPLET_HOST }} "
+            set -e
+            cat /tmp/do_token.txt | docker login registry.digitalocean.com -u \"\$(cat /tmp/do_token.txt)\" --password-stdin
+            rm -f /tmp/do_token.txt
+            docker stop archaean 2>/dev/null || true
+            docker rm archaean 2>/dev/null || true
+            docker pull $IMAGE
+            docker run -d --name archaean --restart unless-stopped -p 80:80 -p 443:443 -e DOMAIN=$DOMAIN -v archaean_caddy_data:/data $IMAGE
+            docker image prune -f
+          "
+          rm -f key.pem token.txt
