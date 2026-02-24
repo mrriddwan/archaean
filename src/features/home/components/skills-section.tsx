@@ -5,6 +5,7 @@ import {
   SKILLS_BACKEND,
   SKILLS_DEPLOYMENT_DEVOPS,
 } from '../data'
+import { FlickeringGrid } from '../../../components/ui/flickering-grid'
 
 const CHILL_AURORA = ['#67e8f9', '#a5b4fc', '#5eead4']
 
@@ -16,8 +17,20 @@ const skillCategory = [
 
 export function SkillsSection() {
   return (
-    <section className="border-b border-slate-700/50 bg-zinc-950 px-4 py-20 sm:px-6 sm:py-28 md:py-32">
-      <div className="mx-auto max-w-3xl">
+    <section className="relative border-b border-slate-700/50 bg-zinc-950 px-4 py-20 sm:px-6 sm:py-28 md:py-32">
+      <div className="bg-transparent absolute inset-0 h-full w-full overflow-hidden z-10">
+        <FlickeringGrid
+          className="absolute inset-0 z-0 size-full"
+          squareSize={4}
+          gridGap={6}
+          color="#6B7280"
+          maxOpacity={0.5}
+          flickerChance={0.1}
+          height={1000}
+          width={2000}
+        />
+      </div>
+      <div className="relative mx-auto max-w-3xl">
         <motion.h2
           className="mb-12 font-mono text-sm uppercase tracking-[0.3em] text-slate-500 sm:mb-14 sm:text-base"
           initial={{ opacity: 0, y: 16 }}
@@ -37,6 +50,7 @@ export function SkillsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ margin: '-40px', amount: 0.2 }}
               transition={{ duration: 0.35, delay: catIndex * 0.05 }}
+              className="relative z-20"
             >
               <h3 className="mb-4 font-mono text-base font-medium text-slate-400 sm:text-lg">
                 {category.title}

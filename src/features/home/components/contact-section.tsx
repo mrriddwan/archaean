@@ -16,7 +16,7 @@ export function ContactSection() {
     <section className="bg-zinc-900 px-4 py-20 sm:px-6 sm:py-28 md:py-32">
       <div className="mx-auto max-w-2xl text-center">
         <motion.h2
-          className="mb-12 font-mono text-sm uppercase tracking-[0.3em] sm:mb-14 sm:text-base"
+          className="mb-8 font-mono text-sm uppercase tracking-[0.3em] sm:mb-2 sm:text-base"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ margin: '-80px', amount: 0.2 }}

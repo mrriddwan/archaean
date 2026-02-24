@@ -1,13 +1,26 @@
 import { motion } from 'motion/react'
 import { AuroraText } from '../../../components/ui/aurora-text'
 import { EXPERIENCE } from '../data'
+import { LightRays } from '../../../components/ui/light-rays'
 
 const CHILL_AURORA = ['#67e8f9', '#a5b4fc', '#5eead4']
 
 export function ExperienceSection() {
   return (
-    <section className="border-b border-slate-700/50 bg-zinc-950 px-4 py-20 sm:px-6 sm:py-28 md:px-8 md:py-32">
-      <div className="mx-auto max-w-3xl">
+    <section className="relative border-b border-slate-700/50 bg-zinc-950 px-4 py-20 sm:px-6 sm:py-28 md:px-8 md:py-32">
+      <div
+        className="absolute inset-0 overflow-hidden z-10"
+        style={{ top: 0, left: 0, right: 0, bottom: 0, width: '100%', height: '100%' }}
+      >
+        <LightRays
+          length="100%"
+          className="absolute inset-0 size-full"
+          style={{ width: '100%', height: '100%' }}
+          count={10}
+          // color="rgba(250, 204, 21, 0.2)"
+        />
+      </div>
+      <div className="relative z-20 mx-auto max-w-3xl">
         <motion.h2
           className="mb-12 font-mono text-sm uppercase tracking-[0.3em] text-slate-500 sm:mb-14 sm:text-base"
           initial={{ opacity: 0, y: 16 }}
