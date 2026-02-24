@@ -7,7 +7,7 @@ const CHILL_AURORA = ['#67e8f9', '#a5b4fc', '#5eead4']
 
 export function ProjectsSection() {
   return (
-    <section className="relative grid not-only-of-type:border-b border-slate-700/50 bg-zinc-900 px-4 py-20 sm:px-6 sm:py-28 md:px-8 md:py-32">
+    <section className="relative grid not-only-of-type:border-b border-slate-700/50 bg-zinc-950 px-4 py-20 sm:px-6 sm:py-28 md:px-8 md:py-32">
       <div className="absolute inset-0 overflow-hidden z-10 [grid-area:1/1]">
         <Particles size={0.5} quantity={1000} staticity={100} ease={100} color="#facc15" className="absolute inset-0 min-h-full min-w-full" vx={0.5} vy={0} />
       </div>
