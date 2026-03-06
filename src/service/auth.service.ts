@@ -13,17 +13,17 @@ const noCredentials = { withCredentials: false } as const
 const authService = {
 
   async login(credentials: LoginPayload): Promise<LoginResponse> {
-    const response = await api.post<LoginResponse>('/auth/login', credentials, noCredentials)
+    const response = await api.post<LoginResponse>('/auth/login', credentials, noCredentials, false)
     return response.data
   },
 
   async register(payload: RegisterPayload): Promise<RegisterResponse> {
-    const response = await api.post<RegisterResponse>('/auth/register', payload, noCredentials)
+    const response = await api.post<RegisterResponse>('/auth/register', payload, noCredentials, false)
     return response.data
   },
 
   async getGoogleTokens(code: string): Promise<LoginResponse> {
-    const response = await api.post<LoginResponse>('/auth/google/tokens', { code }, noCredentials)
+    const response = await api.post<LoginResponse>('/auth/google/tokens', { code }, noCredentials, false)
     return response.data
   },
 
@@ -34,7 +34,7 @@ const authService = {
     }
 
     try {
-      const response = await api.get<User>(`/auth/logged-in`, { headers: { Authorization: `Bearer ${token}` } })
+      const response = await api.get<User>(`/auth/logged-in`)
       return response.data
     } catch (error) {
       console.error(error)
@@ -49,7 +49,7 @@ const authService = {
     }
 
     try {
-      await api.post('/auth/logout', {}, { headers: { Authorization: `Bearer ${token}` } })
+      await api.post('/auth/logout')
     } finally {
       tokenManager.clearTokens()
     }
