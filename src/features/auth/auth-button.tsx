@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { FaUser } from 'react-icons/fa'
 import {
   Menubar,
@@ -21,26 +21,33 @@ import { AlertDialog, AlertDialogContent, AlertDialogDescription, AlertDialogFoo
 import { LoginForm } from './components/login-form'
 import { RegisterForm } from './components/register-form'
 import { useCurrentUser, useLogout } from '../../query/auth'
-import type { RootState } from '../../store'
+import type { AppDispatch, RootState } from '../../store'
 import { Button } from '../../components/ui/button'
+import { setAuthOpen } from '../../store/features/auth/authSlice'
+import { toast } from 'sonner'
+
 
 export const AuthButton = () => {
-  const [isOpen, setIsOpen] = useState(false)
   const [activeTab, setActiveTab] = useState<'login' | 'register'>('login')
   const [confirmLogout, setConfirmLogout] = useState<boolean>(false)
 
+  const dispatch = useDispatch<AppDispatch>()
   const user = useSelector((state: RootState) => state.user.user)
+  const isAuthOpen = useSelector((state: RootState) => state.user.isAuthOpen)
+
   const { isLoading: isLoadingUser } = useCurrentUser()
   const logoutMutation = useLogout()
 
   const handleLoginSuccess = () => {
-    setActiveTab('login')
+    dispatch(setAuthOpen(false))
+    toast.success('Login successful')
   }
 
   const handleLogout = async () => {
     try {
       await logoutMutation.mutateAsync()
-      setIsOpen(false)
+      dispatch(setAuthOpen(false))
+      toast.success('Logout successful')
     } catch (error) {
       console.error('Logout error:', error)
     }
@@ -106,10 +113,10 @@ export const AuthButton = () => {
     )
   }
 
-  
+
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isAuthOpen} onOpenChange={(open) => dispatch(setAuthOpen(open))}>
       <DialogTrigger asChild>
         <button className="p-2 rounded-md transition-colors hover:bg-gray-50 dark:hover:bg-gray-800">
           <FaUser className="size-5 text-black dark:text-white" />
@@ -133,8 +140,8 @@ export const AuthButton = () => {
               type="button"
               onClick={() => setActiveTab('login')}
               className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${activeTab === 'login'
-                  ? 'border-b-2 border-primary text-primary'
-                  : 'text-muted-foreground hover:text-foreground'
+                ? 'border-b-2 border-primary text-primary'
+                : 'text-muted-foreground hover:text-foreground'
                 }`}
             >
               Login
@@ -143,8 +150,8 @@ export const AuthButton = () => {
               type="button"
               onClick={() => setActiveTab('register')}
               className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${activeTab === 'register'
-                  ? 'border-b-2 border-primary text-primary'
-                  : 'text-muted-foreground hover:text-foreground'
+                ? 'border-b-2 border-primary text-primary'
+                : 'text-muted-foreground hover:text-foreground'
                 }`}
             >
               Register

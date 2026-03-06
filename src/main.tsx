@@ -6,6 +6,8 @@ import './index.css'
 import { routeTree } from './routeTree.gen'
 import { Provider } from 'react-redux'
 import { store } from './store'
+import { AuthProvider } from './provider/auth-provider'
+import { Toaster } from 'sonner'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,7 +30,10 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <RouterProvider router={router} />
+        <AuthProvider>
+          <Toaster />
+          <RouterProvider router={router} />
+        </AuthProvider>
       </Provider>
     </QueryClientProvider>
   </StrictMode>,

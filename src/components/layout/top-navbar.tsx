@@ -3,13 +3,15 @@ import { Link, useLocation } from '@tanstack/react-router'
 import { FaHome, FaShoppingCart, FaStore } from 'react-icons/fa'
 
 import { AuthButton } from '../../features/auth/auth-button'
+import { useSelector } from 'react-redux'
+import type { RootState } from '../../store'
 
 const CHILL_AURORA_GRADIENT =
   'linear-gradient(90deg, #67e8f9, #a5b4fc, #c4b5fd, #5eead4, #67e8f9)'
 
 export const TopNavbar = () => {
   const location = useLocation()
-
+  const cartItems = useSelector((state: RootState) => state.cart.cart_items)
   const isActive = (path: string) => location.pathname === path
 
   const navItems = [
@@ -69,8 +71,13 @@ export const TopNavbar = () => {
       {
         isMarketplace && (
           <div className="flex items-center gap-4">
-            <button className="rounded-md p-2">
+            <button className="rounded-md p-2 relative">
               <FaShoppingCart className='size-5 ' />
+              {cartItems.length > 0 && (
+                <span className="absolute top-0 right-0 text-sm font-medium text-white bg-red-500 rounded-full w-4 h-4 flex items-center justify-center">
+                  {cartItems.length}
+                </span>
+              )}
             </button>
             <AuthButton />
           </div>
