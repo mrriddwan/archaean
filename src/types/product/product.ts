@@ -13,12 +13,13 @@ export interface Product {
   shop_id: string
   shop?: Shop
   orders?: ProductOnOrders[]
-  product_on_carts?: ProductOnCarts[]
+  cart_items?: CartItems[]
 }
 
-export interface ProductOnCarts {
+export interface CartItems {
   product_id: string
   cart_id: string
+  quantity: number
   product?: Product
   cart?: Cart
 }
