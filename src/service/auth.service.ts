@@ -34,18 +34,22 @@ const authService = {
     }
 
     try {
-      const userId = tokenManager.getUserId()
-      
-      const response = await api.get<User>(`/users/${userId}`)
+      const response = await api.get<User>(`/auth/logged-in`, { headers: { Authorization: `Bearer ${token}` } })
       return response.data
     } catch (error) {
-      throw new Error('Failed to decode token or fetch user')
+      console.error(error)
+      throw new Error(error instanceof Error ? error.message : 'Failed to decode token or fetch user')
     }
   },
 
   async logout(): Promise<void> {
+    const token = tokenManager.getAccessToken()
+    if (!token) {
+      throw new Error('No access token available')
+    }
+
     try {
-      await api.post('/auth/logout')
+      await api.post('/auth/logout', {}, { headers: { Authorization: `Bearer ${token}` } })
     } finally {
       tokenManager.clearTokens()
     }
