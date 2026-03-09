@@ -1,6 +1,6 @@
 
 import { Link, useLocation } from '@tanstack/react-router'
-import { FaHome, FaShoppingCart, FaStore } from 'react-icons/fa'
+import { FaHome, FaShoppingCart, FaStore, FaFileContract, FaShieldAlt } from 'react-icons/fa'
 
 import { AuthButton } from '../../features/auth/auth-button'
 import { useSelector } from 'react-redux'
@@ -24,6 +24,16 @@ export const TopNavbar = () => {
       label: 'Marketplace',
       icon: <FaStore className="size-5 sm:size-6" />,
       path: '/marketplace',
+    },
+    {
+      label: 'Terms',
+      icon: <FaFileContract className="size-5 sm:size-6" />,
+      path: '/terms',
+    },
+    {
+      label: 'Privacy',
+      icon: <FaShieldAlt className="size-5 sm:size-6" />,
+      path: '/privacy',
     },
   ]
 
