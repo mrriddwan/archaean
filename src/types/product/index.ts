@@ -1,1 +1,1 @@
-export type { Product, ProductOnCarts, ProductOnOrders } from './product'
+export type { Product, CartItems, ProductOnOrders } from './product'
