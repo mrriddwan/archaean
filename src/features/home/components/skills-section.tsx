@@ -17,7 +17,7 @@ const skillCategory = [
 
 export function SkillsSection() {
   return (
-    <section className="relative border-b border-slate-700/50 bg-zinc-950 px-4 py-20 sm:px-6 sm:py-28 md:py-32">
+    <section className="relative  bg-zinc-950 px-4 py-20 sm:px-6 sm:py-28 md:py-32">
       <div className="bg-transparent absolute inset-0 h-full w-full overflow-hidden z-10">
         <FlickeringGrid
           className="absolute inset-0 z-0 size-full"
