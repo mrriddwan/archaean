@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "merge-to-prod": "git checkout deploy/prod && git pull && git merge develop/main && git push && git checkout develop/main",
+    "merge-to-prod": "./scripts/merge-to-prod.sh",
     "pre-push": "pnpm run build",
     "prepare": "husky install"
   },

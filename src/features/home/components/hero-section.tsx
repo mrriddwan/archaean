@@ -13,7 +13,7 @@ export function HeroSection() {
       <div className="absolute inset-0 h-[80%] w-full overflow-hidden z-0">
         <Meteors className="z-0" />
       </div>
-      <div className="absolute inset-0 top-[32%] md:top-[28%] z-10 opacity-60 scale-[1.3]">
+      <div className="absolute inset-0 top-[32%] md:top-[32%] z-10 opacity-60 scale-[1.3]">
         <Globe className="pointer-events-auto" />
       </div>
       <div className="relative z-20 flex flex-col items-center gap-1 text-center mt-24">
