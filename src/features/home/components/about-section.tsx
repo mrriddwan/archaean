@@ -7,7 +7,7 @@ const CHILL_AURORA = ['#67e8f9', '#a5b4fc', '#5eead4']
 
 export function AboutSection() {
   return (
-    <section className="relative border-b border-slate-700/50 bg-zinc-950 px-4 py-20 sm:px-6 sm:py-28 md:px-8 md:py-32">
+    <section className="relative  bg-zinc-950 px-4 py-20 sm:px-6 sm:py-28 md:px-8 md:py-32">
       <div className="mx-auto max-w-3xl relative z-20">
         <motion.h2
           className="mb-8 font-mono text-sm uppercase tracking-[0.3em] text-slate-500 sm:mb-10 sm:text-base"

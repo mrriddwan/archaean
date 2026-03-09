@@ -44,7 +44,6 @@ export const TopNavbar = () => {
       {/** logo */}
       <Link to="/" className="flex items-center gap-1 sm:gap-2">
         <img src="/logo.svg" alt="logo" className="size-10" />
-        <span className="text-2xl font-bold font-mono text-cyan-400">archaean</span>
       </Link>
       <div className="flex items-center gap-1 sm:gap-2 flex-1 justify-center">
         {navItems.map((item) => (
