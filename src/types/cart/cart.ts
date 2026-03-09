@@ -1,5 +1,5 @@
 import type { User } from '../user/user'
-import type { ProductOnCarts } from '../product/product'
+import type { CartItems } from '../product/product'
 
 export interface Cart {
   id: string
@@ -7,6 +7,6 @@ export interface Cart {
   updated_at: Date | string | null
   user_id: string
   user?: User
-  products?: ProductOnCarts[]
+  cart_items?: CartItems[]
 }
 

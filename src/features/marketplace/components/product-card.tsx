@@ -2,6 +2,12 @@
 import { FaShoppingCart } from 'react-icons/fa'
 import { formatPrice } from '../../../util/price'
 import type { Product } from '../../../types/product/product'
+import { useAddProductToCart, useGetCart } from '../../../query/cart'
+import { toast } from 'sonner'
+import type { AppDispatch, RootState } from '../../../store'
+import { useDispatch, useSelector } from 'react-redux'
+import { setAuthOpen } from '../../../store/features/auth/authSlice'
+import { setCart } from '../../../store/features/cart/cartSlice'
 
 interface ProductCardProps {
   product: Product
@@ -9,8 +15,32 @@ interface ProductCardProps {
 
 export const ProductCard = ({ product }: ProductCardProps) => {
 
-  const handleAddToCart = () => {
-    console.log('Add to cart')
+  const { mutateAsync: addProductToCart } = useAddProductToCart()
+  const { mutateAsync: getCart } = useGetCart()
+  const dispatch = useDispatch<AppDispatch>()
+  const user = useSelector((state: RootState) => state.user.user)
+
+  const handleAddToCart = async () => {
+    if (!user) {
+      toast.error('Please login to add product to cart')
+      dispatch(setAuthOpen(true))
+      return
+    }
+
+    try {
+      await addProductToCart(product.id)
+      toast.success('Product added to cart')
+    } catch {
+      toast.error('Failed to add product to cart')
+      return
+    }
+
+    try {
+      const cart = await getCart()
+      dispatch(setCart(cart))
+    } catch {
+      toast.error('Failed to get cart')
+    }
   }
   return (
     <div className="group relative bg-white rounded-lg border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-gray-300">
@@ -32,7 +62,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           <span className="text-xl font-bold text-gray-900">
             {formatPrice(product.price)}
           </span>
-          <button className="flex items-center gap-1 px-4 py-2 text-gray-900 text-sm font-medium rounded-md border border-gray-300 shadow-sm hover:bg-gray-800 transition-colors " onClick={handleAddToCart}>
+          <button className="flex items-center gap-1 px-4 py-2 text-gray-900 text-sm font-medium rounded-md border border-gray-300 shadow-sm hover:translate-y-[-2px] transition-colors " onClick={handleAddToCart}>
             + <FaShoppingCart className='size-4' />
           </button>
         </div>

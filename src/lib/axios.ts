@@ -234,31 +234,50 @@ apiClient.interceptors.response.use(
 // Typed Convenience Methods
 // ─────────────────────────────────────────────
 
+const headers = (config?: AxiosRequestConfig, isAuth: boolean = true) => {
+  return {
+    ...config?.headers,
+    Authorization: isAuth ? `Bearer ${tokenManager.getAccessToken()}` : undefined,
+  }
+}
+
 export const api = {
- get: <T>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> =>
-   apiClient.get<ApiResponse<T>>(url, config).then((r) => r.data),
+ get: <T>(url: string, config?: AxiosRequestConfig, isAuth: boolean = true): Promise<ApiResponse<T>> =>
+   apiClient.get<ApiResponse<T>>(url, {
+     ...config,
+     headers: headers(config, isAuth),
+   }).then((r) => r.data),
 
- post: <T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<ApiResponse<T>> =>
-   apiClient.post<ApiResponse<T>>(url, data, config).then((r) => r.data),
+ post: <T>(url: string, data?: unknown, config?: AxiosRequestConfig, isAuth: boolean = true): Promise<ApiResponse<T>> =>
+   apiClient.post<ApiResponse<T>>(url, data, {
+     ...config,
+     headers: headers(config, isAuth),
+   }).then((r) => r.data),
 
- put: <T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<ApiResponse<T>> =>
-   apiClient.put<ApiResponse<T>>(url, data, config).then((r) => r.data),
+ put: <T>(url: string, data?: unknown, config?: AxiosRequestConfig, isAuth: boolean = true): Promise<ApiResponse<T>> =>
+   apiClient.put<ApiResponse<T>>(url, data, {
+     ...config,
+     headers: headers(config, isAuth),
+   }).then((r) => r.data),
 
- patch: <T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<ApiResponse<T>> =>
-   apiClient.patch<ApiResponse<T>>(url, data, config).then((r) => r.data),
+ patch: <T>(url: string, data?: unknown, config?: AxiosRequestConfig, isAuth: boolean = true): Promise<ApiResponse<T>> =>
+   apiClient.patch<ApiResponse<T>>(url, data, {
+     ...config,
+     headers: headers(config, isAuth),
+   }).then((r) => r.data),
 
- delete: <T>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> =>
-   apiClient.delete<ApiResponse<T>>(url, config).then((r) => r.data),
+ delete: <T>(url: string, config?: AxiosRequestConfig, isAuth: boolean = true): Promise<ApiResponse<T>> =>
+   apiClient.delete<ApiResponse<T>>(url, {
+     ...config,
+     headers: headers(config, isAuth),
+   }).then((r) => r.data),
 
  /** Multipart upload — e.g. product images, seller documents */
- upload: <T>(url: string, formData: FormData, config?: AxiosRequestConfig): Promise<ApiResponse<T>> =>
+ upload: <T>(url: string, formData: FormData, config?: AxiosRequestConfig, isAuth: boolean = true): Promise<ApiResponse<T>> =>
    apiClient
      .post<ApiResponse<T>>(url, formData, {
        ...config,
-       headers: {
-         ...config?.headers,
-         "Content-Type": "multipart/form-data",
-       },
+       headers: headers(config, isAuth),
      })
      .then((r) => r.data),
 };

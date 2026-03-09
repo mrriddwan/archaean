@@ -3,7 +3,7 @@ export type UserRole = "buyer" | "seller" | "admin";
 export interface User {
   id: string;
   email: string;
-  displayName: string;
+  name: string;
   avatarUrl?: string;
   role: UserRole;
   isVerified: boolean;
@@ -23,6 +23,7 @@ export interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
+  isAuthOpen: boolean;
 }
 
 export interface LoginPayload {

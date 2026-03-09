@@ -60,10 +60,6 @@ export const Marketplace = () => {
   return (
     <div className="min-h-screen bg-gray-50 pt-20 pb-16">
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-12">
-            
-        </div>
-
         {products && products.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {products.map((product) => (
